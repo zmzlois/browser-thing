@@ -10,6 +10,12 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "picocolors": "^1.1.1"
+    "@modelcontextprotocol/sdk": "^1.15.1",
+    "@types/content-type": "^1.1.9",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "zod": "^3.23.8"
   }
 }
