@@ -6,8 +6,10 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { type Request, type Response } from 'express';
+import { getConsoleLogs } from './tools/getLogs';
+import { inspectElement } from './tools/inspectElement';
+import { getNetworkRequests } from './tools/getNetworkTab';
 
-// Create an MCP server with implementation details
 const getServer = () => {
     const server = new McpServer({
         name: 'json-response-streamable-http-server',
@@ -18,64 +20,27 @@ const getServer = () => {
         }
     });
 
-    // Register a simple tool that returns a greeting
     server.tool(
-        'greet',
-        'A simple greeting tool',
-        {
-            name: z.string().describe('Name to greet'),
-        },
-        async ({ name }): Promise<CallToolResult> => {
-            return {
-                content: [
-                    {
-                        type: 'text',
-                        text: `Hello, ${name}!`,
-                    },
-                ],
-            };
-        }
+        getConsoleLogs.name,
+        getConsoleLogs.description,
+        getConsoleLogs.schema,
+        getConsoleLogs.handler
     );
 
-    // Register a tool that sends multiple greetings with notifications
     server.tool(
-        'multi-greet',
-        'A tool that sends different greetings with delays between them',
-        {
-            name: z.string().describe('Name to greet'),
-        },
-        async ({ name }, { sendNotification }): Promise<CallToolResult> => {
-            const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-            await sendNotification({
-                method: "notifications/message",
-                params: { level: "debug", data: `Starting multi-greet for ${name}` }
-            });
-
-            await sleep(1000); // Wait 1 second before first greeting
-
-            await sendNotification({
-                method: "notifications/message",
-                params: { level: "info", data: `Sending first greeting to ${name}` }
-            });
-
-            await sleep(1000); // Wait another second before second greeting
-
-            await sendNotification({
-                method: "notifications/message",
-                params: { level: "info", data: `Sending second greeting to ${name}` }
-            });
-
-            return {
-                content: [
-                    {
-                        type: 'text',
-                        text: `Good morning, ${name}!`,
-                    }
-                ],
-            };
-        }
+        inspectElement.name,
+        inspectElement.description,
+        inspectElement.schema,
+        inspectElement.handler
     );
+
+    server.tool(
+        getNetworkRequests.name,
+        getNetworkRequests.description,
+        getNetworkRequests.schema,
+        getNetworkRequests.handler
+    );
+
     return server;
 }
 
