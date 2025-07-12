@@ -9,12 +9,11 @@
  * This is a client for models that are compatible with the OpenAI API, like Ollama, Gemini, etc.
  * You can just pass in an OpenAI instance to the client and it will work.
  */
-
-import {
+import type {
   AvailableModel,
   CreateChatCompletionOptions,
-  LLMClient,
 } from "@browserbasehq/stagehand";
+import { LLMClient } from "@browserbasehq/stagehand";
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import type {
@@ -39,7 +38,7 @@ function validateZodSchema(schema: z.ZodTypeAny, data: unknown) {
 }
 
 export class CustomOpenAIClient extends LLMClient {
-  public type = "openai" as const;
+  public override type = "openai" as const;
   private client: OpenAI;
 
   constructor({ modelName, client }: { modelName: string; client: OpenAI }) {
@@ -121,14 +120,14 @@ export class CustomOpenAIClient extends LLMClient {
             if ("image_url" in content) {
               const imageContent: ChatCompletionContentPartImage = {
                 image_url: {
-                  url: content.image_url.url,
+                  url: content.image_url?.url ?? "",
                 },
                 type: "image_url",
               };
               return imageContent;
             } else {
               const textContent: ChatCompletionContentPartText = {
-                text: content.text,
+                text: content.text ?? "",
                 type: "text",
               };
               return textContent;
@@ -201,14 +200,14 @@ export class CustomOpenAIClient extends LLMClient {
           type: "object",
         },
         requestId: {
-          value: requestId,
+          value: requestId ?? "",
           type: "string",
         },
       },
     });
 
     if (options.response_model) {
-      const extractedData = response.choices[0].message.content;
+      const extractedData = response.choices[0]?.message?.content;
       if (!extractedData) {
         throw new Error("No content in response");
       }
@@ -237,7 +236,7 @@ export class CustomOpenAIClient extends LLMClient {
     }
 
     return {
-      data: response.choices[0].message.content,
+      data: response.choices[0]?.message?.content,
       usage: {
         prompt_tokens: response.usage?.prompt_tokens ?? 0,
         completion_tokens: response.usage?.completion_tokens ?? 0,

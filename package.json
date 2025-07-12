@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "mcp:dev": "bun run ./mcp/index.ts",
-    "mcp:inspector": "bunx @modelcontextprotocol/inspector"
+    "mcp:inspector": "bunx @modelcontextprotocol/inspector",
+    "cli": "bun run ./cli/index.ts",
+    "cli:test-errors": "node ./cli/test-errors.js"
   },
   "devDependencies": {
     "@types/bun": "latest"
@@ -21,5 +23,6 @@
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "zod": "^3.23.8"
-  }
+  }, 
+  "workspaces": ["./*"]
 }
