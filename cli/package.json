@@ -1,0 +1,15 @@
+{
+  "name": "browser-thing-cli",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@clack/core": "^0.5.0",
+    "@clack/prompts": "^0.11.0"
+  }
+}
