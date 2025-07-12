@@ -1,6 +1,8 @@
 import { chromium, type Browser } from 'playwright';
 
-const browser = await chromium.connectOverCDP('ws://localhost:9222/devtools/browser/1f2ea81f-5dda-4526-832a-761de2c5da4e');
+const browser = await chromium.connectOverCDP(
+    'http://localhost:9222'
+);
 
 let context = browser.contexts()[0]!;
 
