@@ -6,7 +6,16 @@ try {
 } catch (e) {
     browser = await chromium.launch();
 }
-const context = await browser.newContext();
-const page = await context.newPage();
+
+let context = browser.contexts()[0];
+
+if (!context) {
+    context = await browser.newContext();
+}
+if (!context) {
+    throw new Error("No context found");
+}
+
+const page = context.pages()[0]!;
 
 export { page, browser };
