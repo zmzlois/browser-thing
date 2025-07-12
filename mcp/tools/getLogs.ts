@@ -1,5 +1,5 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
-import { z } from 'zod';
+
 
 export const getConsoleLogs = {
     name: 'get_console_logs',

@@ -6,9 +6,16 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { type Request, type Response } from 'express';
-import { getConsoleLogs } from './tools/getLogs';
-import { inspectElement } from './tools/inspectElement';
-import { getNetworkRequests } from './tools/getNetworkTab';
+import { getConsoleLogs } from './tools/getLogs.js';
+import { inspectElement } from './tools/inspectElement.js';
+import { getNetworkRequests } from './tools/getNetworkTab.js';
+import { getTitle } from './tools/getTitle.js';
+import { browser, page } from './playwright/browser.js';
+
+// TODO Remove later
+console.log('Page title:', await page.title());
+const element = await page.getByRole('button', { name: 'Send Message' });
+await element.click();
 
 const getServer = () => {
     const server = new McpServer({
@@ -39,6 +46,13 @@ const getServer = () => {
         getNetworkRequests.description,
         getNetworkRequests.schema,
         getNetworkRequests.handler
+    );
+
+    server.tool(
+        getTitle.name,
+        getTitle.description,
+        getTitle.schema,
+        getTitle.handler
     );
 
     return server;
