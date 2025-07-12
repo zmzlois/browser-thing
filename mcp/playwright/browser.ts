@@ -1,20 +1,9 @@
-import { chromium, type Browser } from 'playwright';
+import { chromium } from "playwright";
 
-const browser = await chromium.connectOverCDP(
-    'http://localhost:9222'
-);
+const browser = await chromium.launch();
+const context = await browser.newContext();
+const page = await context.newPage();
 
-let context = browser.contexts()[0]!;
-
-if (browser.contexts().length <= 0) {
-    throw new Error('No context is currently open.');
-}
-
-const first = context.pages()?.[0]!;
-const isInspectorOpen = (await first.title()).includes("DevTools");
-
-const ACTIVE_TAB = 0;
-
-const page = context.pages()?.[isInspectorOpen ? ACTIVE_TAB : ACTIVE_TAB]!;
+await page.goto("http://localhost:5173");
 
 export { page, browser };
