@@ -129,7 +129,7 @@ app.listen(PORT, HOST, (error) => {
         process.exit(1);
     }
     console.log(`MCP Streamable HTTP Server listening on http://${HOST}:${PORT}`);
-    console.log(`Access from local network: http://<your-local-ip>:${PORT}`);
+    console.log(`Access from local network: http://<your-local-ip>:${PORT}/mcp`);
 });
 
 // Handle server shutdown
