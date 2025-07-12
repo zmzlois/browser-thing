@@ -1,7 +1,8 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
+import type { MCPServerToolDefinition } from '../types/MCPServerTool';
 
-export const inspectElement = {
+export const inspectElement: MCPServerToolDefinition = {
     name: 'inspect_element',
     description: 'Inspect an element on the page by CSS selector',
     schema: {

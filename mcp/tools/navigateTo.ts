@@ -1,10 +1,9 @@
-// await page.goto("http://localhost:5173");
-
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { page } from '../playwright/browser.js';
+import type { MCPServerToolDefinition } from '../types/MCPServerTool.js';
 
-export const navigateTo = {
+export const navigateTo: MCPServerToolDefinition = {
     name: 'navigate_to',
     description: 'Navigate the browser to the specified URL',
     schema: {

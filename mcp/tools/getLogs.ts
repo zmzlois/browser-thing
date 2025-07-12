@@ -1,7 +1,8 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
+import type { MCPServerToolDefinition } from '../types/MCPServerTool';
 
 
-export const getConsoleLogs = {
+export const getConsoleLogs: MCPServerToolDefinition = {
     name: 'get_console_logs',
     description: 'Get console logs',
     schema: {},

@@ -1,7 +1,8 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
+import type { MCPServerToolDefinition } from '../types/MCPServerTool';
 
-export const getNetworkRequests = {
+export const getNetworkRequests: MCPServerToolDefinition = {
     name: 'get_network_requests',
     description: 'Retrieve network requests made by the page, optionally filtered by URL substring, HTTP method, or time range',
     schema: {

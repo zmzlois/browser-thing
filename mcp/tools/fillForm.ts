@@ -1,8 +1,9 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { page } from '../playwright/browser.js';
+import type { MCPServerToolDefinition } from '../types/MCPServerTool.js';
 
-export const fillForm = {
+export const fillForm: MCPServerToolDefinition = {
     name: 'fill_form',
     description: 'Fill out a form with name, email, subject, and message fields',
     schema: {
