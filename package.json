@@ -17,6 +17,7 @@
     "@types/bun": "latest"
   },
   "dependencies": {
+    "@browserbasehq/stagehand": "^2.4.1",
     "@modelcontextprotocol/sdk": "^1.15.1",
     "@types/content-type": "^1.1.9",
     "@types/cors": "^2.8.19",
