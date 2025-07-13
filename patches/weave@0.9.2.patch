@@ -1,0 +1,13 @@
+diff --git a/dist/clientApi.js b/dist/clientApi.js
+index dba834d99fe9b70d6452d0e40dea411fa9f81184..d500c98bfe47b018dcbe70a5ee032c14c027b92c 100644
+--- a/dist/clientApi.js
++++ b/dist/clientApi.js
+@@ -116,7 +116,7 @@ async function init(project, settings) {
+         const client = new weaveClient_1.WeaveClient(traceServerApi, wandbServerApi, projectId, settings);
+         setGlobalClient(client);
+         (0, urls_1.setGlobalDomain)(domain);
+-        console.log(`Initializing project: ${projectId}`);
++        // console.log(`Initializing project: ${projectId}`);
+         return client;
+     }
+     catch (error) {
