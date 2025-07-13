@@ -50,7 +50,7 @@ Built with:
 * Node.js (via Bun)
 * Playwright for browser automation
 * MCP (Model Context Protocol) for agent orchestration
-* Compatible with Claude, Cursor, and other AI devtools
+* Compatible with Claude, Cursor, Gemini, and other AI devtools
 ![System diagram](https://github.com/zmzlois/browser-thing/raw/main/diagram.png)
 
 ## Challenges
