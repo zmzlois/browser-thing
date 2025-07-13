@@ -1,7 +1,7 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
-import { page } from '../playwright/browser.js';
 import type { MCPServerToolDefinition } from '../types/MCPServerTool.js';
+import { loadStagehand } from '../playwright/browser.js';
 
 export const fillForm: MCPServerToolDefinition = {
     name: 'fill_form',
@@ -18,24 +18,20 @@ export const fillForm: MCPServerToolDefinition = {
     ): Promise<CallToolResult> => {
         console.log('Filling form for session:', context?.sessionId);
 
-        const filled = {
-            name: params.name,
-            email: params.email,
-            subject: params.subject,
-            message: params.message,
-        };
+        const stagehand = await loadStagehand();
+        await stagehand.page.waitForLoadState('networkidle');
 
-        await page.fill('input[name="name"]', params.name);
-        await page.fill('input[name="email"]', params.email);
-        await page.fill('input[name="subject"]', params.subject);
-        await page.fill('textarea[name="message"]', params.message);
-        await page.click('button[type="submit"]');
-
+        const agent = await stagehand.agent().execute("Fill out the form with some sample data and submit it");
+      
         return {
             content: [
                 {
                     type: 'text',
-                    text: JSON.stringify({ filled }, null, 2),
+                    text: JSON.stringify({
+                        success: agent.success,
+                        message: agent.message,
+                        actions: agent.actions,
+                     }, null, 2),
                 },
             ],
         };

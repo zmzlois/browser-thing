@@ -11,17 +11,12 @@ import express, { type Request, type Response } from 'express';
 import { getConsoleLogs } from './tools/getLogs.js';
 import { inspectElement } from './tools/inspectElement.js';
 import { getNetworkRequests } from './tools/getNetworkTab.js';
-import { browser, page } from './playwright/browser.js';
 import { fillForm } from './tools/fillForm.js';
 import { navigateTo } from './tools/navigateTo.js';
 
 
 await weave.init('frontline_mcp')
 //weave.init('frontline_mcp')
-// TODO Remove later
-console.log('Page title:', await page.title());
-const element = await page.getByRole('button', { name: 'Send Message' });
-await element.click();
 
 const getServer = () => {
     const server = new McpServer({

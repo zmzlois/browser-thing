@@ -1,21 +1,40 @@
-import { chromium } from "playwright";
+import { Stagehand } from "@browserbasehq/stagehand";
 
-let browser;
-try {
-    browser = await chromium.connectOverCDP('http://localhost:9222');
-} catch (e) {
-    browser = await chromium.launch();
+let stagehand: Stagehand | null = null;
+
+function initNewStagehand(cdp?: string) {
+  return new Stagehand({
+    env: "LOCAL",
+    modelName: "openai/gpt-4.1-mini",
+    modelClientOptions: {
+      apiKey: process.env.OPENAI_API_KEY,
+    },
+
+    localBrowserLaunchOptions: {
+      viewport: undefined, // TODO Set to null
+    },
+
+    verbose: 1,
+  });
 }
 
-let context = browser.contexts()[0];
+export async function loadStagehand() {
+  if (stagehand) {
+    return stagehand;
+  }
 
-if (!context) {
-    context = await browser.newContext();
+  let browser;
+
+  try {
+    stagehand = initNewStagehand("http://localhost:9222");
+  } catch {
+    stagehand = initNewStagehand();
+  }
+
+  await stagehand.init();
+
+  const { page } = stagehand;
+  await page.goto("http://localhost:5173");
+
+  return stagehand;
 }
-if (!context) {
-    throw new Error("No context found");
-}
-
-const page = context.pages()[0]!;
-
-export { page, browser };
