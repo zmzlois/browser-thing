@@ -6,7 +6,7 @@
   "workspaces": ["./*", "test-app/*"],
   "scripts": {
     "mcp:dev": "node --loader ts-node/esm ./mcp/index.ts",
-    "mcp:inspector": "bunx @modelcontextprotocol/inspector", 
+    "mcp:inspector": "bunx @modelcontextprotocol/inspector",
     "app:dev": "cd test-app && bun run dev"
   },
   "devDependencies": {
@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.15.1",
+    "@opentelemetry/otlp-proto-exporter-base": "^0.51.1",
     "@types/content-type": "^1.1.9",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
