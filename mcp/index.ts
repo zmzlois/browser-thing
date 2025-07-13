@@ -1,18 +1,19 @@
 import { randomUUID } from 'node:crypto';
-import { z } from 'zod';
 import cors from 'cors';
+<<<<<<< HEAD
 
+=======
+import * as weave from 'weave';
+>>>>>>> 9c28aae309ad96f6979f5b341681869b9d10a75c
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { type Request, type Response } from 'express';
 import { getConsoleLogs } from './tools/getLogs.js';
 import { inspectElement } from './tools/inspectElement.js';
-import { getNetworkRequests } from './tools/getNetworkTab.js';
-import { browser, page } from './playwright/browser.js';
-import { fillForm } from './tools/fillForm.js';
+import { getNetworkMessages } from './tools/getNetworkMessages.js';
 import { navigateTo } from './tools/navigateTo.js';
+<<<<<<< HEAD
 import * as weave from 'weave';
 import { sdk } from 'weave-mcp-ts';
 import { trace, context, SpanStatusCode } from '@opentelemetry/api';
@@ -23,6 +24,15 @@ sdk.start()
 // 2. traces are not logged ("mpc.tool.name" or "mcp.session")
 // Create a tracer for MCP operations
 const tracer = trace.getTracer('mcp-server');
+=======
+import { loadStagehand } from './playwright/browser.js';
+import * as dotenv from 'dotenv';
+import { executeInBrowser } from './tools/executeInBrowser.js';
+
+dotenv.config();
+
+await weave.init('frontline_mcp')
+>>>>>>> 9c28aae309ad96f6979f5b341681869b9d10a75c
 
 const getServer = () => {
     const server = new McpServer({
@@ -34,6 +44,7 @@ const getServer = () => {
         }
     });
 
+<<<<<<< HEAD
     // Wrap tool handlers with tracing
     const wrapToolHandler = (toolName: string, handler: any) => {
         return async (params: unknown, context?: { sessionId?: string }): Promise<CallToolResult> => {
@@ -65,6 +76,8 @@ const getServer = () => {
         };
     };
 
+=======
+>>>>>>> 9c28aae309ad96f6979f5b341681869b9d10a75c
     server.tool(
         getConsoleLogs.name,
         getConsoleLogs.description,
@@ -73,6 +86,7 @@ const getServer = () => {
     )
 
     server.tool(
+<<<<<<< HEAD
         inspectElement.name,
         inspectElement.description,
         inspectElement.schema,
@@ -91,12 +105,33 @@ const getServer = () => {
         fillForm.schema,
         wrapToolHandler('fill_form', fillForm.handler)
     );
+=======
+        executeInBrowser.name,
+        executeInBrowser.description,
+        executeInBrowser.schema,
+        executeInBrowser.handler
+    )
+
+    // server.tool(
+    //     inspectElement.name,
+    //     inspectElement.description,
+    //     inspectElement.schema,
+    //     inspectElement.handler
+    // )
+>>>>>>> 9c28aae309ad96f6979f5b341681869b9d10a75c
 
     server.tool(
         navigateTo.name,
         navigateTo.description,
         navigateTo.schema,
         wrapToolHandler('navigate_to', navigateTo.handler)
+    );
+
+    server.tool(
+        getNetworkMessages.name,
+        getNetworkMessages.description,
+        getNetworkMessages.schema,
+        getNetworkMessages.handler
     );
 
     return server;

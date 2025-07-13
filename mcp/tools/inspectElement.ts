@@ -36,6 +36,7 @@ export const inspectElement: MCPServerToolDefinition = {
                     text: JSON.stringify({ element: fakeElementInfo }, null, 2),
                 },
             ],
+            isError: false,
         };
     }
 };

@@ -1,0 +1,8 @@
+{
+  "Click the suggestion to use AI": {
+    "description": "Option to ask AI assistant about why to use Stagehand",
+    "method": "click",
+    "arguments": [],
+    "selector": "xpath=/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[8]"
+  }
+}

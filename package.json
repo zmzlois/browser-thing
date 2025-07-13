@@ -19,6 +19,7 @@
     "@types/bun": "latest"
   },
   "dependencies": {
+    "@browserbasehq/stagehand": "^2.4.1",
     "@modelcontextprotocol/sdk": "^1.15.1",
     "@opentelemetry/otlp-proto-exporter-base": "^0.51.1",
     "@types/content-type": "^1.1.9",
