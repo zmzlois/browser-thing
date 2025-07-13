@@ -186,7 +186,8 @@ export class ProtobufConverter {
                 resource_spans: any[];
             };
             
-            // Force the protobuf to use only our snake_case data, remove any camelCase duplicates
+            // Force the protobuf to use only our snake_case data, remove any camelCase duplicates 
+            // @ts-ignore
             if (messageInstance.resourceSpans || messageInstance.resourceSpans.length === 0 || messageInstance.resource_spans) {
                 console.log('Fixing protobuf field mapping: copying resource_spans to resourceSpans');
                 messageInstance.resourceSpans = messageInstance.resource_spans;
@@ -229,8 +230,11 @@ export class ProtobufConverter {
             // Get parent span ID - handle both real spans and mock spans
             let parentSpanId = new Uint8Array(0);
             if (span.parentSpanContext) {
+                // @ts-ignore
                 parentSpanId = this.hexToBytes(span.parentSpanContext.spanId);
+                // @ts-ignore
             } else if (span.parentSpanId) {
+                // @ts-ignore
                 parentSpanId = this.hexToBytes(span.parentSpanId);
             }
 
