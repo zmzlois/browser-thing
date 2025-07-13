@@ -38,6 +38,11 @@ async function testManualProtobuf() {
         console.log(`📏 Data length: ${protobufData.length} bytes`);
         console.log(`🔍 First 20 bytes: ${Array.from(protobufData.slice(0, 20)).map(b => b.toString(16).padStart(2, '0')).join(' ')}`);
         
+        // First, save the binary data to a file for verification
+        console.log('💾 Saving protobuf data to trace_request.bin...');
+        await Bun.write('./otel/trace_request.bin', protobufData);
+        console.log('✅ Binary file saved successfully');
+        
         // Test the actual W&B endpoint if API key is available
         if (process.env.WANDB_API_KEY) {
             console.log('🌐 Testing W&B endpoint...');

@@ -257,12 +257,12 @@ export class ProtobufConverter {
             };
             
             // console.log('Converted span:', {
-                name: convertedSpan.name,
-                trace_id: spanContext.traceId,
-                span_id: spanContext.spanId,
-                start_time: startTimeNano,
-                end_time: endTimeNano
-            });
+            //     name: convertedSpan.name,
+            //     trace_id: spanContext.traceId,
+            //     span_id: spanContext.spanId,
+            //     start_time: startTimeNano,
+            //     end_time: endTimeNano
+            // });
             
             return convertedSpan;
         } catch (error) {
