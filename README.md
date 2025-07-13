@@ -13,7 +13,7 @@ Started with @Nicolapp's daily struggle from at [Convex](https://www.convex.dev/
 
 ## Architecture & Tech Stack
 
-![System diagram](https://github.com/zmzlois/browser-thing/raw/main/images/architecture.png)
+![System diagram](https://github.com/zmzlois/frontline/raw/main/images/architecture.png)
 
 
 This application uses: 
@@ -35,12 +35,12 @@ This application uses:
 6. Cursor agent can now perform needed action to understand the source of error and recommend changes
 7. Trace LLM call with Weave
 
-![mcp-tool](https://raw.githubusercontent.com/zmzlois/browser-thing/main/images/mcp-tool.png)
-![weave](https://raw.githubusercontent.com/zmzlois/browser-thing/main/images/weave-dashboard-trace.png)
+![mcp-tool](https://raw.githubusercontent.com/zmzlois/frontline/main/images/mcp-tool.png)
+![weave](https://raw.githubusercontent.com/zmzlois/frontline/main/images/weave-dashboard-trace.png)
 
 ## Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/SZ-4vUR6Ptc?si=OXZ9qqKyDRWr6iKq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+#### [Video Demo](https://www.youtube.com/watch?v=SZ-4vUR6Ptc)
 
 ## Challenges 
 
@@ -52,7 +52,7 @@ This application uses:
 ### OSS PR opened/pending during this hackathon 
 1. [Allow dynamic viewport for stagehand](https://github.com/browserbase/stagehand/pull/874)
 2. [Readme improvement for stagehand](https://github.com/browserbase/stagehand/pull/873)
-3. [Custom tracing typescript SDK for Weave to support protobuf conversion and MCP server, completely OTEL compliant](https://github.com/zmzlois/browser-thing/tree/main/otel)
+3. [Custom tracing typescript SDK for Weave to support protobuf conversion and MCP server, completely OTEL compliant](https://github.com/zmzlois/frontline/tree/main/otel)
 
 ## Getting Started
 You’ll need:
@@ -66,7 +66,7 @@ You’ll need:
 
 ### 1. Start the MCP server
 ```bash
-git clone https://github.com/zmzlois/browser-thing 
+git clone https://github.com/zmzlois/frontline 
 
 
 ## or optionally with 
@@ -74,8 +74,8 @@ npx frontline-mcp@latest
 ```
 ### 2. Clone the demo project (separate terminal)
 ```
-git clone https://github.com/Nicolapps/browser-thing-project-demo 
-cd browser-thing-project-demo
+git clone https://github.com/Nicolapps/frontline-project-demo 
+cd frontline-project-demo
 npm install
 npm run dev
 ```
@@ -87,7 +87,7 @@ This command runs the MCP inspector agent. It connects your agent to a live Chro
 In a separate terminal: 
 
 ```
-cd browser-thing 
+cd frontline 
 bun run mcp:dev # start the server locally
 bun run mcp:inspector
 ```
