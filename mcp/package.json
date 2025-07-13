@@ -23,6 +23,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.56.0",
     "@axe-core/playwright": "^4.10.2",
     "@browserbasehq/stagehand": "^2.4.1",
     "@modelcontextprotocol/sdk": "^1.15.1",

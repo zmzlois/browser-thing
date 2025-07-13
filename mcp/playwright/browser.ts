@@ -1,12 +1,8 @@
 import { Stagehand } from "@browserbasehq/stagehand";
 import { type ConsoleMessage, type Request, type Response } from "playwright";
-import * as dotenv from "dotenv";
-import { WeaveClient } from "../utils/WeaveClient.js";
-import OpenAI from "openai";
+import { createWeaveClient } from "./provider.js";
 
 let stagehand: Stagehand | null = null;
-
-dotenv.config();
 
 interface NetworkEntry {
     request: Request;
@@ -14,31 +10,16 @@ interface NetworkEntry {
     timestamp: number;
 }
 
-
-const apiKey = process.env['OPENAI_API_KEY'] || process.env.OPENAI_API_KEY; 
-
-if (!apiKey) {
-    throw new Error("[browser-thing] OPENAI_API_KEY is not set");
-}
-
-console.log("apiKey", apiKey);
-
 function initNewStagehand(cdpUrl?: string) {
+    const llmClient = createWeaveClient();
     return new Stagehand({
         env: "LOCAL",
-        llmClient: new WeaveClient({
-            modelName: "gpt-4.1-mini",
-            client: new OpenAI({
-                apiKey: process.env.OPENAI_API_KEY,
-            }),
-        }),
-
+        llmClient,
         localBrowserLaunchOptions: {
             // @ts-ignore
             viewport: null,
             cdpUrl,
         },
-
         verbose: 1,
     });
 }
@@ -104,6 +85,5 @@ const clearConsoleLogs = () => {
 const clearNetworkLogs = () => {
     networkLogs.clear();
 };
-
 
 export { consoleLogs, clearConsoleLogs, networkLogs, clearNetworkLogs, type NetworkEntry };
