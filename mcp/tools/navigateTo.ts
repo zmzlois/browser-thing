@@ -1,5 +1,6 @@
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
+import { clearConsoleLogs, clearNetworkLogs } from '../playwright/browser.js';
 import type { MCPServerToolDefinition } from '../types/MCPServerTool.js';
 import { navigate } from '../playwright/browser.js';
 
@@ -14,6 +15,9 @@ export const navigateTo: MCPServerToolDefinition = {
         context?: { sessionId?: string }
     ): Promise<CallToolResult> => {
         console.log('Navigating to URL for session:', context?.sessionId, params.url);
+
+        clearConsoleLogs();
+        clearNetworkLogs();
 
         await navigate(params.url);
 
