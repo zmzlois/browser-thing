@@ -1,6 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import cors from 'cors';
+import * as weave from 'weave';
+import { op } from 'weave';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
@@ -13,6 +15,9 @@ import { browser, page } from './playwright/browser.js';
 import { fillForm } from './tools/fillForm.js';
 import { navigateTo } from './tools/navigateTo.js';
 
+
+await weave.init('frontline_mcp')
+//weave.init('frontline_mcp')
 // TODO Remove later
 console.log('Page title:', await page.title());
 const element = await page.getByRole('button', { name: 'Send Message' });
@@ -28,20 +33,21 @@ const getServer = () => {
         }
     });
 
-    server.tool(
+   
+
+   server.tool(
         getConsoleLogs.name,
         getConsoleLogs.description,
         getConsoleLogs.schema,
         getConsoleLogs.handler
-    );
+    )
 
     server.tool(
         inspectElement.name,
         inspectElement.description,
         inspectElement.schema,
         inspectElement.handler
-    );
-
+    )
     server.tool(
         getNetworkRequests.name,
         getNetworkRequests.description,
@@ -66,8 +72,10 @@ const getServer = () => {
     return server;
 }
 
+
 const app = express();
 app.use(express.json());
+
 
 // Configure CORS to expose Mcp-Session-Id header for browser-based clients
 app.use(cors({
@@ -78,7 +86,7 @@ app.use(cors({
 // Map to store transports by session ID
 const transports: { [sessionId: string]: StreamableHTTPServerTransport } = {};
 
-app.post('/mcp', async (req: Request, res: Response) => {
+weave.op(app.post('/mcp', async (req: Request, res: Response) => {
     console.log('Received MCP request:', req.body);
     try {
         // Check for existing session ID
@@ -134,7 +142,8 @@ app.post('/mcp', async (req: Request, res: Response) => {
             });
         }
     }
-});
+})
+);
 
 app.get('/mcp', async (req: Request, res: Response) => {
     // Since this is a very simple example, we don't support GET requests for this server
@@ -145,7 +154,7 @@ app.get('/mcp', async (req: Request, res: Response) => {
 // Start the server
 const PORT = 4000;
 const HOST = '0.0.0.0'; // Bind to all network interfaces
-app.listen(PORT, HOST, (error) => {
+app.listen(PORT, HOST, async (error) => {
     if (error) {
         console.error('Failed to start server:', error);
         process.exit(1);
