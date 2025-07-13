@@ -122,8 +122,8 @@ export class ProtobufConverter {
             
             // Parse the schema
             const parsed = protobuf.parse(schema, this.root);
-            console.log('Protobuf schema loaded successfully');
-            console.log('Available types:', Object.keys(this.root.nested || {}));
+            // console.log('Protobuf schema loaded successfully');
+            // console.log('Available types:', Object.keys(this.root.nested || {}));
         } catch (error) {
             console.error('Error initializing ProtobufConverter:', error);
             throw error;
@@ -131,10 +131,10 @@ export class ProtobufConverter {
     }
 
     convertSpansToProtobuf(spans: ReadableSpan[]): Uint8Array {
-        console.log("convertSpansToProtobuf.spans", spans)
+        // console.log("convertSpansToProtobuf.spans", spans)
         try {
-            console.log('Converting spans to protobuf...');
-            console.log('Input spans:', spans.length);
+            // console.log('Converting spans to protobuf...');
+            // console.log('Input spans:', spans.length);
             
             // Get the message type
             const ExportTraceServiceRequest = this.root.lookupType("ExportTraceServiceRequest");
@@ -142,7 +142,7 @@ export class ProtobufConverter {
                 throw new Error("Failed to find ExportTraceServiceRequest type");
             }
             
-            console.log('✅ Found ExportTraceServiceRequest type');
+            // console.log('✅ Found ExportTraceServiceRequest type');
             
             // Convert spans to protobuf message format using exact protobuf field names (snake_case)
             const resource_spans = [{
@@ -170,17 +170,17 @@ export class ProtobufConverter {
                 resource_spans: resource_spans
             };
 
-            console.log('✅ Message structure created successfully');
+            // console.log('✅ Message structure created successfully');
 
             // Validate the message before encoding
             const errMsg = ExportTraceServiceRequest.verify(message);
             if (errMsg) {
                 throw new Error(`Protobuf validation failed: ${errMsg}`);
             }
-            console.log('Message validation passed');
+            // console.log('Message validation passed');
 
             // Create a message instance and encode it
-            console.log('Creating message instance...');
+            // console.log('Creating message instance...');
             const messageInstance = ExportTraceServiceRequest.create(message) as unknown as typeof ExportTraceServiceRequest['create'] & {
                 resourceSpans: any[];
                 resource_spans: any[];
@@ -189,28 +189,28 @@ export class ProtobufConverter {
             // Force the protobuf to use only our snake_case data, remove any camelCase duplicates 
             // @ts-ignore
             if (messageInstance.resourceSpans || messageInstance.resourceSpans.length === 0 || messageInstance.resource_spans) {
-                console.log('Fixing protobuf field mapping: copying resource_spans to resourceSpans');
+                // console.log('Fixing protobuf field mapping: copying resource_spans to resourceSpans');
                 messageInstance.resourceSpans = messageInstance.resource_spans;
                 delete (messageInstance as any).resource_spans;
             }
             
-            console.log('Message instance created with resource spans count:', messageInstance.resourceSpans?.length || 0);
+            // console.log('Message instance created with resource spans count:', messageInstance.resourceSpans?.length || 0);
             
-            console.log('Encoding message...');
+            // console.log('Encoding message...');
             const buffer = ExportTraceServiceRequest.encode(messageInstance).finish();
-            console.log('Buffer created, length:', buffer.length);
+            // console.log('Buffer created, length:', buffer.length);
             
             if (buffer.length === 0) {
                 console.error('❌ Empty buffer detected! Message might be invalid');
-                console.log('Debug - message keys:', Object.keys(message));
-                console.log('Debug - messageInstance keys:', Object.keys(messageInstance));
-                console.log('Debug - resource_spans length:', message.resource_spans?.length);
+                // console.log('Debug - message keys:', Object.keys(message));
+                // console.log('Debug - messageInstance keys:', Object.keys(messageInstance));
+                // console.log('Debug - resource_spans length:', message.resource_spans?.length);
                 throw new Error('Empty protobuf buffer generated');
             }
             
             const result = new Uint8Array(buffer);
-            console.log('Final Uint8Array length:', result.length);
-            console.log('First few bytes:', Array.from(result.slice(0, 10)));
+            // console.log('Final Uint8Array length:', result.length);
+            // console.log('First few bytes:', Array.from(result.slice(0, 10)));
             
             return result;
         } catch (error) {
@@ -256,7 +256,7 @@ export class ProtobufConverter {
                 status: this.convertStatus(span.status)
             };
             
-            console.log('Converted span:', {
+            // console.log('Converted span:', {
                 name: convertedSpan.name,
                 trace_id: spanContext.traceId,
                 span_id: spanContext.spanId,

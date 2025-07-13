@@ -33,7 +33,7 @@ class CustomProtobufExporter implements SpanExporter {
 
     async export(spans: ReadableSpan[], resultCallback: (result: ExportResult) => void): Promise<void> {
         try {
-            console.log(`Exporting ${spans.length} spans to W&B`);
+          //  console.log(`Exporting ${spans.length} spans to W&B`);
             // Convert spans to protobuf format using the proper converter
             const protobufData = this.converter.convertSpansToProtobuf(spans);
             
@@ -100,4 +100,3 @@ export const sdk = new NodeSDK({
     instrumentations: [getNodeAutoInstrumentations()],
 });
 
-console.log("bearer", `Bearer ${Buffer.from(`api:${process.env.WANDB_API_KEY}`).toString('base64')}`)

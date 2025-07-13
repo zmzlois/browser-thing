@@ -14,8 +14,7 @@ interface NetworkEntry {
 }
 
 
-const apiKey = process.env['OPENAI_API_KEY'] || process.env.OPENAI_API_KEY ; 
-console.log("apiKey", apiKey);
+const apiKey = process.env['OPENAI_API_KEY'] || process.env.OPENAI_API_KEY; 
 
 if (!apiKey) {
     throw new Error("[browser-thing] OPENAI_API_KEY is not set");
