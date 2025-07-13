@@ -2,6 +2,7 @@ import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import type { MCPServerToolDefinition } from '../types/MCPServerTool.js';
 import { loadStagehand } from '../playwright/browser.js';
+import { LLM_PROVIDER } from '../playwright/provider.js';
 
 export const executeInBrowser: MCPServerToolDefinition = {
     name: 'execute_in_browser',
@@ -28,7 +29,9 @@ export const executeInBrowser: MCPServerToolDefinition = {
             };
         }
 
-        const agent = await stagehand.agent().execute(params.command);
+        const agent = (LLM_PROVIDER === 'anthropic') ?
+            await stagehand.agent({ model: 'claude-3-7-sonnet-latest', provider: LLM_PROVIDER }).execute(params.command) :
+            await stagehand.agent().execute(params.command);
 
         return {
             content: [

@@ -2,12 +2,11 @@ import * as dotenv from "dotenv";
 import { WeaveClient } from "../utils/WeaveClient.js";
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
+import { AgentProviderType } from "@browserbasehq/stagehand";
 
 dotenv.config();
 
-type LLMProviderType = 'openai' | 'anthropic';
-
-const LLM_PROVIDER = 'openai' as LLMProviderType;
+export const LLM_PROVIDER = 'openai' as AgentProviderType;
 
 const openaiApiKey = process.env['OPENAI_API_KEY'] || process.env.OPENAI_API_KEY;
 const anthropicApiKey = process.env['ANTHROPIC_API_KEY'] || process.env.ANTHROPIC_API_KEY;
@@ -18,7 +17,7 @@ const MODEL_CONFIG = {
         apiKey: openaiApiKey,
     },
     anthropic: {
-        modelName: "claude-3-5-sonnet",
+        modelName: "claude-3-7-sonnet-latest",
         apiKey: anthropicApiKey,
     }
 };
@@ -34,7 +33,7 @@ if (LLM_PROVIDER === 'anthropic' && !anthropicApiKey) {
 export function getLLMConfig() {
     const config = MODEL_CONFIG[LLM_PROVIDER as keyof typeof MODEL_CONFIG];
     return {
-        provider: LLM_PROVIDER as LLMProviderType,
+        provider: LLM_PROVIDER,
         modelName: config.modelName,
         apiKey: config.apiKey,
     };

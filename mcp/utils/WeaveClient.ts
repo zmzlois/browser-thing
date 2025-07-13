@@ -75,11 +75,11 @@ export class WeaveClient extends LLMClient {
             const extractData = weave.op(browsePage);
             await extractData(body as Anthropic.Messages.MessageCreateParams);
         } else {
-            const extractOpenAIData = async (body: ChatCompletionCreateParamsNonStreaming) => {
+            const browsePage = async (body: ChatCompletionCreateParamsNonStreaming) => {
                 response = await (this.client as OpenAI).chat.completions.create(body);
                 return response.choices[0]!.message.content!;
             };
-            const extractData = weave.op(extractOpenAIData);
+            const extractData = weave.op(browsePage);
             await extractData(body as ChatCompletionCreateParamsNonStreaming);
         }
 
