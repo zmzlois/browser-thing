@@ -44,22 +44,22 @@ export async function loadStagehand() {
     const page = stagehand?.page;
     console.log("Page ", page);
 
-    page.on("console", (msg: ConsoleMessage) => {
+    page.on("console", (msg) => {
         consoleLogs.push(msg);
     });
 
-    page.on("request", (request: Request) => {
+    page.on("request", (request) => {
         networkLogs.set(request, {
             request,
             timestamp: Date.now()
         });
     });
 
-    page.on("requestfailed", (request: Request) => {
+    page.on("requestfailed", (request) => {
         console.log("[Network Request Failed]", request.method(), request.url(), request.failure());
     });
 
-    page.on("response", async (response: Response) => {
+    page.on("response", async (response) => {
         const request = response.request();
 
         const entry = networkLogs.get(request);

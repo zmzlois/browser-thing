@@ -11,6 +11,7 @@ import { getNetworkMessages } from './tools/getNetworkMessages.js';
 import { navigateTo } from './tools/navigateTo.js';
 import { loadStagehand } from './playwright/browser.js';
 import * as dotenv from 'dotenv';
+import { executeInBrowser } from './tools/executeInBrowser.js';
 
 dotenv.config();
 
@@ -31,6 +32,13 @@ const getServer = () => {
         getConsoleLogs.description,
         getConsoleLogs.schema,
         getConsoleLogs.handler
+    )
+
+    server.tool(
+        executeInBrowser.name,
+        executeInBrowser.description,
+        executeInBrowser.schema,
+        executeInBrowser.handler
     )
 
     // server.tool(
