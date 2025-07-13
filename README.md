@@ -36,6 +36,7 @@ This application uses:
 7. Trace LLM call with Weave
 
 ![mcp-tool](https://raw.githubusercontent.com/zmzlois/browser-thing/main/images/mcp-tool.png)
+![weave](https://raw.githubusercontent.com/zmzlois/browser-thing/main/images/weave-dashboard-trace.png)
 
 ## Demo
 
@@ -87,7 +88,7 @@ In a separate terminal:
 
 ```
 cd browser-thing 
-bun run mcp:dev
+bun run mcp:dev # start the server locally
 bun run mcp:inspector
 ```
 
