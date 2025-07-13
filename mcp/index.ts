@@ -13,6 +13,11 @@ import { navigateTo } from './tools/navigateTo.js';
 import { executeInBrowser } from './tools/executeInBrowser.js';
 import { cleanLogs } from './tools/cleanLogs.js';
 import { trace, context, SpanStatusCode } from '@opentelemetry/api';
+import * as dotenv from "dotenv";
+
+dotenv.config({
+    quiet: true,
+});
 
 // Create a tracer for MCP operations
 const tracer = trace.getTracer('mcp-server');
@@ -118,7 +123,6 @@ async function runStdioServer() {
     const transport = new StdioServerTransport();
     
     await server.connect(transport);
-    console.error('MCP server is running on stdio...');
 }
 
 async function runHttpServer() {

@@ -1,10 +1,7 @@
-import * as dotenv from "dotenv";
 import { WeaveClient } from "../utils/WeaveClient.js";
 import OpenAI from "openai";
 import Anthropic from "@anthropic-ai/sdk";
 import { AgentProviderType } from "@browserbasehq/stagehand";
-
-dotenv.config();
 
 export const LLM_PROVIDER = 'openai' as AgentProviderType;
 
