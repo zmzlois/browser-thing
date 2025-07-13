@@ -11,6 +11,7 @@ import express, { type Request, type Response } from 'express';
 import { getConsoleLogs } from './tools/getLogs.js';
 import { inspectElement } from './tools/inspectElement.js';
 import { getNetworkRequests } from './tools/getNetworkTab.js';
+import { getNetworkMessages } from './tools/getNetworkMessages.js';
 import { fillForm } from './tools/fillForm.js';
 import { navigateTo } from './tools/navigateTo.js';
 
@@ -62,6 +63,13 @@ const getServer = () => {
         navigateTo.description,
         navigateTo.schema,
         navigateTo.handler
+    );
+
+    server.tool(
+        getNetworkMessages.name,
+        getNetworkMessages.description,
+        getNetworkMessages.schema,
+        getNetworkMessages.handler
     );
 
     return server;
