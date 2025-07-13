@@ -18,7 +18,7 @@ function initNewStagehand(cdpUrl?: string) {
         },
 
         localBrowserLaunchOptions: {
-            viewport: undefined, // TODO Set to null
+            viewport: null,
             cdpUrl,
         },
 

@@ -18,10 +18,13 @@ importers:
         version: 4.10.2(playwright-core@1.54.1)
       '@browserbasehq/stagehand':
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=cmmnujthg5llrwyz7rp67yeyr4)(deepmerge@4.3.1)(dotenv@16.6.1)(react@19.1.0)(zod@3.25.76)
+        version: 2.4.1(patch_hash=cmmnujthg5llrwyz7rp67yeyr4)(deepmerge@4.3.1)(dotenv@17.2.0)(react@19.1.0)(zod@3.25.76)
       '@modelcontextprotocol/sdk':
         specifier: ^1.15.1
         version: 1.15.1
+      dotenv:
+        specifier: ^17.2.0
+        version: 17.2.0
       puppeteer:
         specifier: ^24.12.0
         version: 24.12.1(typescript@5.8.3)
@@ -511,8 +514,8 @@ packages:
     resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
     engines: {node: '>=0.3.1'}
 
-  dotenv@16.6.1:
-    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
+  dotenv@17.2.0:
+    resolution: {integrity: sha512-Q4sgBT60gzd0BB0lSyYD3xM4YxrXA9y4uBDof1JNYGzOXrQdQ6yX+7XIAqoFOGQFOTK1D3Hts5OllpxMDZFONQ==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -1507,7 +1510,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@browserbasehq/stagehand@2.4.1(patch_hash=cmmnujthg5llrwyz7rp67yeyr4)(deepmerge@4.3.1)(dotenv@16.6.1)(react@19.1.0)(zod@3.25.76)':
+  '@browserbasehq/stagehand@2.4.1(patch_hash=cmmnujthg5llrwyz7rp67yeyr4)(deepmerge@4.3.1)(dotenv@17.2.0)(react@19.1.0)(zod@3.25.76)':
     dependencies:
       '@anthropic-ai/sdk': 0.39.0
       '@browserbasehq/sdk': 2.6.0
@@ -1515,7 +1518,7 @@ snapshots:
       ai: 4.3.17(react@19.1.0)(zod@3.25.76)
       deepmerge: 4.3.1
       devtools-protocol: 0.0.1464554
-      dotenv: 16.6.1
+      dotenv: 17.2.0
       fetch-cookie: 3.1.0
       openai: 4.104.0(ws@8.18.3)(zod@3.25.76)
       pino: 9.7.0
@@ -1871,7 +1874,7 @@ snapshots:
 
   diff@4.0.2: {}
 
-  dotenv@16.6.1: {}
+  dotenv@17.2.0: {}
 
   dunder-proto@1.0.1:
     dependencies:
