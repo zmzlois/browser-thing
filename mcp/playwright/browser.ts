@@ -45,16 +45,14 @@ export async function loadStagehand() {
 
     await stagehand.init();
 
-    const { page } = stagehand;
+    const page = stagehand?.page;
+    console.log("Page ", page);
 
-    await page.goto("http://localhost:5173");
-
-
-    page.on("console", (msg) => {
+    page.on("console", (msg: ConsoleMessage) => {
         consoleLogs.push(msg);
     });
 
-    page.on("request", (request) => {
+    page.on("request", (request: Request) => {
         console.log("Request", request.url(), request.method());
         networkLogs.set(request, {
             request,
@@ -62,16 +60,17 @@ export async function loadStagehand() {
         });
     });
 
-    page.on("requestfailed", (request) => {
+    page.on("requestfailed", (request: Request) => {
         console.log("[FAILED]", request.method(), request.url(), request.failure());
     });
 
-    page.on("response", async (response) => {
+    page.on("response", async (response: Response) => {
         const request = response.request();
 
-        const entry = networkLogs.get(response.request());
+        const entry = networkLogs.get(request);
         if (entry) {
             entry.response = response;
+            entry.timestamp = Date.now();
             networkLogs.set(request, {
                 request,
                 response,
@@ -81,8 +80,10 @@ export async function loadStagehand() {
     });
 
     await page.goto("http://localhost:5173");
-    
-    await stagehand.page.waitForLoadState("networkidle");
+
+    await page.waitForLoadState("networkidle");
+
+    return stagehand;
 }
 
 const clearConsoleLogs = () => {

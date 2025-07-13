@@ -18,7 +18,7 @@ export const fillForm: MCPServerToolDefinition = {
     ): Promise<CallToolResult> => {
         console.log('Filling form for session:', context?.sessionId);
 
-        const stagehand = loadStagehand();
+        const stagehand = await loadStagehand();
         if (!stagehand) {
             return {
                 isError: true,
