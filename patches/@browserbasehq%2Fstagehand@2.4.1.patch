@@ -1,0 +1,46 @@
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index d85a899599ccd0b2e953aab7a1aa8e6ad400cd8a..6cc895cc4cd6c37e7b1b1ccbfd6b5af8f4ead3b6 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -472,7 +472,7 @@ interface LocalBrowserLaunchOptions {
+     viewport?: {
+         width: number;
+         height: number;
+-    };
++    } | null;
+     deviceScaleFactor?: number;
+     timezoneId?: string;
+     bypassCSP?: boolean;
+diff --git a/dist/index.js b/dist/index.js
+index fc2f1444b6da09b812a20291aefbdc850d44b30b..4caf47fc257a7e3521df117931c4476ce022aac3 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -22055,13 +22055,13 @@ function getBrowser(apiKey, projectId, env = "LOCAL", headless = false, logger,
+       const context = yield import_playwright5.chromium.launchPersistentContext(userDataDir, {
+         acceptDownloads: (_a15 = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.acceptDownloads) != null ? _a15 : true,
+         headless: (_b = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.headless) != null ? _b : headless,
+-        viewport: {
++        viewport: (localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.viewport) === null ? null : {
+           width: (_d = (_c = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.viewport) == null ? void 0 : _c.width) != null ? _d : 1024,
+           height: (_f = (_e = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.viewport) == null ? void 0 : _e.height) != null ? _f : 768
+         },
+         locale: (_g = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.locale) != null ? _g : "en-US",
+         timezoneId: (_h = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.timezoneId) != null ? _h : "America/New_York",
+-        deviceScaleFactor: (_i = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.deviceScaleFactor) != null ? _i : 1,
++        deviceScaleFactor: (localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.viewport) === null ? void 0 : (_i = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.deviceScaleFactor) != null ? _i : 1,
+         args: (_j = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.args) != null ? _j : [
+           "--disable-blink-features=AutomationControlled"
+         ],
+diff --git a/dist/types/stagehand.d.ts b/dist/types/stagehand.d.ts
+index 0523e8c905c4415c9a55db51d05565a522881fc6..4879917cea6fe34f98d781b2cb48c7f2f721fca4 100644
+--- a/dist/types/stagehand.d.ts
++++ b/dist/types/stagehand.d.ts
+@@ -202,7 +202,7 @@ export interface LocalBrowserLaunchOptions {
+     viewport?: {
+         width: number;
+         height: number;
+-    };
++    } | null;
+     deviceScaleFactor?: number;
+     timezoneId?: string;
+     bypassCSP?: boolean;
