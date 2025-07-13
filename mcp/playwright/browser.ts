@@ -34,11 +34,7 @@ export async function loadStagehand() {
         return stagehand;
     }
 
-    try {
-        stagehand = initNewStagehand("http://localhost:9222");
-    } catch {
-        stagehand = initNewStagehand();
-    }
+    stagehand = initNewStagehand();
     if (!stagehand) {
         throw new Error("Failed to initialize Stagehand");
     }
