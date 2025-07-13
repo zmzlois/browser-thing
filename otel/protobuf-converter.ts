@@ -181,13 +181,16 @@ export class ProtobufConverter {
 
             // Create a message instance and encode it
             console.log('Creating message instance...');
-            const messageInstance = ExportTraceServiceRequest.create(message);
+            const messageInstance = ExportTraceServiceRequest.create(message) as unknown as typeof ExportTraceServiceRequest['create'] & {
+                resourceSpans: any[];
+                resource_spans: any[];
+            };
             
             // Force the protobuf to use only our snake_case data, remove any camelCase duplicates
-            if (messageInstance.resourceSpans && messageInstance.resourceSpans.length === 0 && messageInstance.resource_spans) {
+            if (messageInstance.resourceSpans || messageInstance.resourceSpans.length === 0 || messageInstance.resource_spans) {
                 console.log('Fixing protobuf field mapping: copying resource_spans to resourceSpans');
                 messageInstance.resourceSpans = messageInstance.resource_spans;
-                delete messageInstance.resource_spans;
+                delete (messageInstance as any).resource_spans;
             }
             
             console.log('Message instance created with resource spans count:', messageInstance.resourceSpans?.length || 0);
