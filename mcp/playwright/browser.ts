@@ -20,7 +20,7 @@ function initNewStagehand(cdpUrl?: string) {
         env: "LOCAL",
         modelName: "openai/gpt-4.1-mini",
         modelClientOptions: {
-            apiKey: process.env.OPENAI_API_KEY,
+            apiKey: apiKey,
         },
 
         localBrowserLaunchOptions: {
