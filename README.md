@@ -20,7 +20,7 @@ This application uses:
 1. [Stagehand](https://www.stagehand.dev/) by BrowserBase
 2. [Weave](https://wandb.ai/site/weave/) by Weights & Bias 
     - [Weave project url](https://wandb.ai/lois-zh/frontline_mcp/weave/traces?view=traces_default)
-3. Official [Module Context Protocol](https://www.npmjs.com/package/@modelcontextprotocol/sdk)
+3. Official [Module Context Protocol](https://www.npmjs.com/package/@modelcontextprotocol/sdk) for MCP server development
 4. [Template by Convex](https://www.convex.dev/templates)
 5. [Puppeteer](https://pptr.dev/guides/installation)
 6. [Anthropic AI SDK](https://www.npmjs.com/package/@anthropic-ai/sdk)
@@ -35,24 +35,23 @@ This application uses:
 6. Cursor agent can now perform needed action to understand the source of error and recommend changes
 7. Trace LLM call with Weave
 
-![mcp-tool](./images/mcp-tool.png)
+![mcp-tool](https://raw.githubusercontent.com/zmzlois/browser-thing/main/images/mcp-tool.png)
 
 ## Demo
-* Video link
-* Screenshots, gif 
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/SZ-4vUR6Ptc?si=OXZ9qqKyDRWr6iKq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Challenges 
 
-1. WE ARE NOOBs - our entire team met through OSS community, other than @Andrew, none of us have any prior knowledge so we learnt things on the fly during this hackathon 
+1. WE ARE NOOBs - our entire team met through OSS community, we have little prior knowledge regarding MCP so we learnt things on the fly during this hackathon 
 2. Using Stagehand with a non-headless browser that is also manipulated by a human user is currently inconvenient. One reason is the lack of an option to use the OS viewport size. We end up open several PR to improve the issue. 
-3. Weave's Typescript SDK doesn't support MCP server. It only supports LLM call tracing. We added it in [automation](/mcp/utils/WeaveClient.ts) and additionally attempted to write a new typescript SDK from scratch to support complex instrumenting to include infra/system information including machine details, v8 conditions, network requests etc. 
+3. Weave's Typescript SDK doesn't support MCP server. It only supports LLM call tracing. We added Weave for [stagehand's browser automation](/mcp/utils/WeaveClient.ts) and additionally attempted to write a new typescript SDK from scratch to support complex instrumenting to include infra/system information including machine details, v8 conditions, network requests etc. 
 
 
 ### OSS PR opened/pending during this hackathon 
 1. [Allow dynamic viewport for stagehand](https://github.com/browserbase/stagehand/pull/874)
 2. [Readme improvement for stagehand](https://github.com/browserbase/stagehand/pull/873)
-3. [Custom tracing typescript SDK for Weave to support protobuf conversion and MCP server, completely OTEL compliant](/otel)
+3. [Custom tracing typescript SDK for Weave to support protobuf conversion and MCP server, completely OTEL compliant](https://github.com/zmzlois/browser-thing/tree/main/otel)
 
 ## Getting Started
 You’ll need:
@@ -68,6 +67,7 @@ You’ll need:
 ```bash
 git clone https://github.com/zmzlois/browser-thing 
 
+
 ## or optionally with 
 npx frontline-mcp@latest
 ```
@@ -82,9 +82,16 @@ npm run dev
 ### 3. Start Frontline
 This command runs the MCP inspector agent. It connects your agent to a live Chrome browser using Playwright and opens a control interface in a new browser tab. Depending on your environment, use one or the other:  
 
+
+In a separate terminal: 
+
 ```
-npx @modelcontextprotocol/inspector
-```  
+cd browser-thing 
+bun run mcp:dev
+bun run mcp:inspector
+```
+
+
   
 
 
@@ -95,8 +102,9 @@ npx @modelcontextprotocol/inspector
 
 
 
-## What's Next
-* Finish the tracing package customised for weave so it can trace both LLM calls and MCP servers - [draft PR]()
+## What's Next & What can be done better 
+* Finish the tracing package customised for weave so it can trace both LLM calls and MCP servers 
+* Our traces don't have a stacks due to current limitation
 * The unfinished CLI package should auto set up agent tooling, spin up both mcp inspector, mcp server and install package/tool to take care of necessary dependencies like Playwright
 * It could be helpful to use Stagehand with non-Chromium browsers. I saw that this is not on the roadmap for now (https://github.com/browserbase/stagehand/issues/391), but as a user it’s difficult to understand why something that wraps Playwright can’t be used on all platforms that Playwright supports. 
 * There’s a full API reference at https://docs.stagehand.dev/reference/introduction, but it would be even better if this documentation were embedded in the TypeScript types that are bundled with the package
