@@ -9,6 +9,10 @@ import { getConsoleLogs } from './tools/getLogs.js';
 import { inspectElement } from './tools/inspectElement.js';
 import { getNetworkMessages } from './tools/getNetworkMessages.js';
 import { navigateTo } from './tools/navigateTo.js';
+import { loadStagehand } from './playwright/browser.js';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 await weave.init('frontline_mcp')
 
