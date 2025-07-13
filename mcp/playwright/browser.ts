@@ -49,7 +49,6 @@ export async function loadStagehand() {
     });
 
     page.on("request", (request: Request) => {
-        console.log("Request", request.url(), request.method());
         networkLogs.set(request, {
             request,
             timestamp: Date.now()
@@ -57,7 +56,7 @@ export async function loadStagehand() {
     });
 
     page.on("requestfailed", (request: Request) => {
-        console.log("[FAILED]", request.method(), request.url(), request.failure());
+        console.log("[Network Request Failed]", request.method(), request.url(), request.failure());
     });
 
     page.on("response", async (response: Response) => {
