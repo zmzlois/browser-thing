@@ -9,6 +9,12 @@ interface NetworkEntry {
     timestamp: number;
 }
 
+const apiKey = process.env.OPENAI_API_KEY; 
+
+if (!apiKey) {
+    throw new Error("[browser-thing] OPENAI_API_KEY is not set");
+}
+
 function initNewStagehand(cdpUrl?: string) {
     return new Stagehand({
         env: "LOCAL",
