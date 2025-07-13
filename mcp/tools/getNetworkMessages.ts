@@ -5,7 +5,7 @@ import { networkLogs } from '../playwright/browser.js';
 
 export const getNetworkMessages: MCPServerToolDefinition = {
     name: 'get_network_messages',
-    description: 'Get network messages/requests captured by the browser, including responses when available',
+    description: 'Get network requests and responses captured by the browser',
     schema: {
         count: z.number().optional().describe('Number of most recent network messages to return'),
         urlFilter: z.string().optional().describe('Filter messages by URL substring'),

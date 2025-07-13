@@ -8,7 +8,6 @@ import express, { type Request, type Response } from 'express';
 import { getConsoleLogs } from './tools/getLogs.js';
 import { inspectElement } from './tools/inspectElement.js';
 import { getNetworkMessages } from './tools/getNetworkMessages.js';
-import { fillForm } from './tools/fillForm.js';
 import { navigateTo } from './tools/navigateTo.js';
 
 await weave.init('frontline_mcp')
@@ -30,19 +29,12 @@ const getServer = () => {
         getConsoleLogs.handler
     )
 
-    server.tool(
-        inspectElement.name,
-        inspectElement.description,
-        inspectElement.schema,
-        inspectElement.handler
-    )
-
-    server.tool(
-        fillForm.name,
-        fillForm.description,
-        fillForm.schema,
-        fillForm.handler
-    );
+    // server.tool(
+    //     inspectElement.name,
+    //     inspectElement.description,
+    //     inspectElement.schema,
+    //     inspectElement.handler
+    // )
 
     server.tool(
         navigateTo.name,
