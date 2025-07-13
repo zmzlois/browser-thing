@@ -1,15 +1,19 @@
 {
-  "name": "mcp",
+  "name": "frontline-mcp",
   "module": "index.ts",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "frontline-mcp": "dist/index.js"
+  },
   "scripts": {
     "start": "node --loader ts-node/esm index.ts",
     "dev": "node --loader ts-node/esm index.ts",
     "build": "tsc",
-    "test": "playwright test"
+    "test": "playwright test",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@playwright/test": "^1.53.2",
