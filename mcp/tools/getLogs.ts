@@ -24,6 +24,7 @@ export const getConsoleLogs: MCPServerToolDefinition = {
         if (logMessages.length === 0) {
             return {
                 content: [{ type: 'text', text: 'No logs found' }],
+                isError: false,
             };
         }
 
@@ -40,6 +41,7 @@ export const getConsoleLogs: MCPServerToolDefinition = {
                     text: JSON.stringify({ logs }, null, 2),
                 },
             ],
+            isError: false,
         };
     }
 };

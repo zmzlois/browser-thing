@@ -29,8 +29,8 @@ export function loadStagehand() {
   return stagehand;
 }
 
-const consoleLogs: ConsoleMessage[] = [];
-const networkLogs: Request[] = [];
+export const consoleLogs: ConsoleMessage[] = [];
+export const networkLogs: Request[] = [];
 
 export const clearConsoleLogs = () => {
   consoleLogs.length = 0;

@@ -44,6 +44,7 @@ export const fillForm: MCPServerToolDefinition = {
                      }, null, 2),
                 },
             ],
+            isError: false,
         };
     },
 };

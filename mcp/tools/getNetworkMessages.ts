@@ -52,6 +52,7 @@ export const getNetworkMessages: MCPServerToolDefinition = {
                     }, null, 2),
                 },
             ],
+            isError: false,
         };
     }
 };

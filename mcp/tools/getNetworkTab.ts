@@ -52,6 +52,7 @@ export const getNetworkRequests: MCPServerToolDefinition = {
                     text: JSON.stringify({ sessionId: context?.sessionId, requests: filtered }, null, 2),
                 },
             ],
+            isError: false,
         };
     }
 };

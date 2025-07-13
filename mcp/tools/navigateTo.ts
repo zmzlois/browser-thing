@@ -28,6 +28,7 @@ export const navigateTo: MCPServerToolDefinition = {
                     text: `Navigated to ${params.url}`,
                 },
             ],
+            isError: false,
         };
     },
 };
