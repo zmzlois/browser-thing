@@ -15,6 +15,7 @@ export const getConsoleLogs: MCPServerToolDefinition = {
     },
     handler: async (params: { count?: number, type?: LogType }, context?: { sessionId?: string }): Promise<CallToolResult> => {
         console.log("Request from: ", context?.sessionId);
+
         const { count, type } = params;
 
         const logMessages = consoleLogs

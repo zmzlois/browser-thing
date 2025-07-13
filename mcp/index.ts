@@ -1,23 +1,17 @@
 import { randomUUID } from 'node:crypto';
-import { z } from 'zod';
 import cors from 'cors';
 import * as weave from 'weave';
-import { op } from 'weave';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import type { CallToolResult } from '@modelcontextprotocol/sdk/types.js';
 import { isInitializeRequest } from '@modelcontextprotocol/sdk/types.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { type Request, type Response } from 'express';
 import { getConsoleLogs } from './tools/getLogs.js';
 import { inspectElement } from './tools/inspectElement.js';
-import { getNetworkRequests } from './tools/getNetworkTab.js';
 import { getNetworkMessages } from './tools/getNetworkMessages.js';
 import { fillForm } from './tools/fillForm.js';
 import { navigateTo } from './tools/navigateTo.js';
 
-
 await weave.init('frontline_mcp')
-//weave.init('frontline_mcp')
 
 const getServer = () => {
     const server = new McpServer({
@@ -29,9 +23,7 @@ const getServer = () => {
         }
     });
 
-   
-
-   server.tool(
+    server.tool(
         getConsoleLogs.name,
         getConsoleLogs.description,
         getConsoleLogs.schema,
@@ -44,12 +36,6 @@ const getServer = () => {
         inspectElement.schema,
         inspectElement.handler
     )
-    server.tool(
-        getNetworkRequests.name,
-        getNetworkRequests.description,
-        getNetworkRequests.schema,
-        getNetworkRequests.handler
-    );
 
     server.tool(
         fillForm.name,

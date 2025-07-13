@@ -1,65 +1,97 @@
 import { Stagehand } from "@browserbasehq/stagehand";
-import { type ConsoleMessage, type Request } from "playwright";
+import { type ConsoleMessage, type Request, type Response } from "playwright";
 
 let stagehand: Stagehand | null = null;
 
+interface NetworkEntry {
+    request: Request;
+    response?: Response;
+    timestamp: number;
+}
+
 function initNewStagehand(cdpUrl?: string) {
-  return new Stagehand({
-    env: "LOCAL",
-    modelName: "openai/gpt-4.1-mini",
-    modelClientOptions: {
-      apiKey: process.env.OPENAI_API_KEY,
-    },
+    return new Stagehand({
+        env: "LOCAL",
+        modelName: "openai/gpt-4.1-mini",
+        modelClientOptions: {
+            apiKey: process.env.OPENAI_API_KEY,
+        },
 
-    localBrowserLaunchOptions: {
-      viewport: undefined, // TODO Set to null
-      cdpUrl,
-    },
+        localBrowserLaunchOptions: {
+            viewport: undefined, // TODO Set to null
+            cdpUrl,
+        },
 
-    verbose: 1,
-  });
+        verbose: 1,
+    });
 }
 
-/**
- * Load Stagehand on the last page that was navigated to.
- *
- * If the navigate endpoint was never called, this will return null.
- */
-export function loadStagehand() {
-  return stagehand;
-}
+const consoleLogs: ConsoleMessage[] = [];
+const networkLogs: Map<Request, NetworkEntry> = new Map();
 
-export const consoleLogs: ConsoleMessage[] = [];
-export const networkLogs: Request[] = [];
+export async function loadStagehand() {
+    if (stagehand) {
+        return stagehand;
+    }
 
-export const clearConsoleLogs = () => {
-  consoleLogs.length = 0;
-};
-
-export const clearNetworkLogs = () => {
-  networkLogs.length = 0;
-};
-
-export async function navigate(url: string) {
-  if (!stagehand) {
     try {
-      stagehand = initNewStagehand("http://localhost:9222");
+        stagehand = initNewStagehand("http://localhost:9222");
     } catch {
-      stagehand = initNewStagehand();
+        stagehand = initNewStagehand();
+    }
+    if (!stagehand) {
+        throw new Error("Failed to initialize Stagehand");
     }
 
     await stagehand.init();
-  }
 
-  const { page } = stagehand;
+    const { page } = stagehand;
 
-  page.on("console", (msg) => {
-    consoleLogs.push(msg);
-  });
-  page.on("request", (request) => {
-    networkLogs.push(request);
-  });
+    await page.goto("http://localhost:5173");
 
-  await page.goto(url);
-  await stagehand.page.waitForLoadState("networkidle");
+
+    page.on("console", (msg) => {
+        consoleLogs.push(msg);
+    });
+
+    page.on("request", (request) => {
+        console.log("Request", request.url(), request.method());
+        networkLogs.set(request, {
+            request,
+            timestamp: Date.now()
+        });
+    });
+
+    page.on("requestfailed", (request) => {
+        console.log("[FAILED]", request.method(), request.url(), request.failure());
+    });
+
+    page.on("response", async (response) => {
+        const request = response.request();
+
+        const entry = networkLogs.get(response.request());
+        if (entry) {
+            entry.response = response;
+            networkLogs.set(request, {
+                request,
+                response,
+                timestamp: Date.now()
+            });
+        }
+    });
+
+    await page.goto("http://localhost:5173");
+    
+    await stagehand.page.waitForLoadState("networkidle");
 }
+
+const clearConsoleLogs = () => {
+    consoleLogs.length = 0;
+};
+
+const clearNetworkLogs = () => {
+    networkLogs.clear();
+};
+
+
+export { consoleLogs, clearConsoleLogs, networkLogs, clearNetworkLogs, type NetworkEntry };
