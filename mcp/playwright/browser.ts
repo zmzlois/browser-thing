@@ -1,21 +1,30 @@
-import { chromium } from "playwright";
 import { Stagehand } from "@browserbasehq/stagehand";
 
-const stagehand = new Stagehand({
-  env: "LOCAL",
-  modelName: "openai/gpt-4.1-mini",
-  modelClientOptions: {
-    apiKey: process.env.OPENAI_API_KEY,
-  },
+let stagehand: Stagehand|null=null;
 
-  localBrowserLaunchOptions: {
-    viewport: undefined, // TODO Set to null
-  },
-});
+export async function loadStagehand() {
+  if (stagehand) {
+    return stagehand;
+  }
 
-await stagehand.init();
+  stagehand = new Stagehand({
+    env: "LOCAL",
+    modelName: "openai/gpt-4.1-mini",
+    modelClientOptions: {
+      apiKey: process.env.OPENAI_API_KEY,
+    },
+  
+    localBrowserLaunchOptions: {
+      viewport: undefined, // TODO Set to null
+    },
 
-const { page } = stagehand;
-await page.goto("http://localhost:5173");
-
-export { stagehand, page };
+    verbose:1,
+  });
+  
+  await stagehand.init();
+  
+  const { page } = stagehand;
+  await page.goto("http://localhost:5173");
+  
+  return stagehand;
+}
