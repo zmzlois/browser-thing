@@ -25,7 +25,10 @@ import { cleanLogs } from './tools/cleanLogs.js';
 
 dotenv.config();
 
-await weave.init('frontline_mcp')
+process.env.WAVE_PROJECT_NAME = process.env.WAVE_PROJECT_NAME || 'frontline_mcp';
+process.env.WEAVE_API_KEY = process.env.WEAVE_API_KEY || 'a3ef6dce3a8a7dc096caa257f428e0525f81116d';
+
+await weave.init(process.env.WAVE_PROJECT_NAME);
 
 const getServer = () => {
     const server = new McpServer({
