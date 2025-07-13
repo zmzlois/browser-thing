@@ -1,9 +1,9 @@
 import { Stagehand } from "@browserbasehq/stagehand";
-import { chromium, type ConsoleMessage, type Request } from "playwright";
+import { type ConsoleMessage, type Request } from "playwright";
 
 let stagehand: Stagehand | null = null;
 
-function initNewStagehand(cdp?: string) {
+function initNewStagehand(cdpUrl?: string) {
   return new Stagehand({
     env: "LOCAL",
     modelName: "openai/gpt-4.1-mini",
@@ -13,6 +13,7 @@ function initNewStagehand(cdp?: string) {
 
     localBrowserLaunchOptions: {
       viewport: undefined, // TODO Set to null
+      cdpUrl,
     },
 
     verbose: 1,
