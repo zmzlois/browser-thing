@@ -12,10 +12,7 @@ import { getConsoleLogs } from './tools/getLogs.js';
 import { inspectElement } from './tools/inspectElement.js';
 import { getNetworkMessages } from './tools/getNetworkMessages.js';
 import { navigateTo } from './tools/navigateTo.js';
-import { sdk } from 'weave-mcp-ts';
 import { trace, context, SpanStatusCode } from '@opentelemetry/api';
-
-sdk.start()
 
 // 1. functions are not loged 
 // 2. traces are not logged ("mpc.tool.name" or "mcp.session")
