@@ -8,10 +8,10 @@ export const executeInBrowser: MCPServerToolDefinition = {
     description: 'Execute a natural language command in the browser and return the result',
     schema: {
         command: z.string().describe('A natural language request to perform in the browser'),
-        context: z.string().describe('Additional context for the command (ex: implementation details, etc)'),
+        additionalContext: z.string().optional().describe('Additional context for the command (ex: implementation details, etc)'),
     },
     handler: async (
-        params: { command: string },
+        params: { command: string, commandContext?: string },
         context?: { sessionId?: string }
     ): Promise<CallToolResult> => {
         console.log('Executing in browser for session:', context?.sessionId, 'Command:', params.command);

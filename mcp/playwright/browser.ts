@@ -1,7 +1,8 @@
 import { Stagehand } from "@browserbasehq/stagehand";
 import { type ConsoleMessage, type Request, type Response } from "playwright";
-import child_process from "child_process";
 import * as dotenv from "dotenv";
+import { WeaveClient } from "../utils/WeaveClient.js";
+import OpenAI from "openai";
 
 let stagehand: Stagehand | null = null;
 
@@ -25,10 +26,12 @@ console.log("apiKey", apiKey);
 function initNewStagehand(cdpUrl?: string) {
     return new Stagehand({
         env: "LOCAL",
-        modelName: "openai/gpt-4.1-mini",
-        modelClientOptions: {
-            apiKey: apiKey,
-        },
+        llmClient: new WeaveClient({
+            modelName: "gpt-4.1-mini",
+            client: new OpenAI({
+                apiKey: process.env.OPENAI_API_KEY,
+            }),
+        }),
 
         localBrowserLaunchOptions: {
             // @ts-ignore
@@ -56,7 +59,6 @@ export async function loadStagehand() {
     await stagehand.init();
 
     const page = stagehand?.page;
-    console.log("Page ", page);
 
     page.on("console", (msg) => {
         consoleLogs.push(msg);
