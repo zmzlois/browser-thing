@@ -1,4 +1,4 @@
-import { Stagehand } from "@browserbasehq/stagehand";
+import { LogLine, Stagehand } from "@browserbasehq/stagehand";
 import { type ConsoleMessage, type Request, type Response } from "playwright";
 import { createWeaveClient } from "./provider.js";
 
@@ -20,6 +20,10 @@ function initNewStagehand(cdpUrl?: string) {
             viewport: null,
             cdpUrl,
         },
+        logger: (message) =>
+            console.error(
+                logLineToString(message)
+            ) /* Custom logging function to stderr */,
         verbose: 1,
     });
 }
@@ -85,5 +89,15 @@ const clearConsoleLogs = () => {
 const clearNetworkLogs = () => {
     networkLogs.clear();
 };
+
+// Helper function to convert LogLine to string
+export function logLineToString(logLine: LogLine): string {
+  const timestamp = logLine.timestamp ? new Date(logLine.timestamp).toISOString() : new Date().toISOString();
+  const level = logLine.level !== undefined ? 
+    (logLine.level === 0 ? 'DEBUG' : 
+     logLine.level === 1 ? 'INFO' : 
+     logLine.level === 2 ? 'ERROR' : 'UNKNOWN') : 'UNKNOWN';
+  return `[${timestamp}] [${level}] ${logLine.message || ''}`;
+}
 
 export { consoleLogs, clearConsoleLogs, networkLogs, clearNetworkLogs, type NetworkEntry };

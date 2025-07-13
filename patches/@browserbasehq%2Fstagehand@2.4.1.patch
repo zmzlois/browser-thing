@@ -12,9 +12,18 @@ index d85a899599ccd0b2e953aab7a1aa8e6ad400cd8a..6cc895cc4cd6c37e7b1b1ccbfd6b5af8
      timezoneId?: string;
      bypassCSP?: boolean;
 diff --git a/dist/index.js b/dist/index.js
-index fc2f1444b6da09b812a20291aefbdc850d44b30b..4caf47fc257a7e3521df117931c4476ce022aac3 100644
+index fc2f1444b6da09b812a20291aefbdc850d44b30b..2179f4dbbbe2792a0181220be911f016a4d70ca7 100644
 --- a/dist/index.js
 +++ b/dist/index.js
+@@ -21861,7 +21861,7 @@ var AvailableModelSchema = import_zod49.z.enum([
+ ]);
+ 
+ // lib/index.ts
+-import_dotenv.default.config({ path: ".env" });
++import_dotenv.default.config({ path: ".env", quiet: true });
+ var DEFAULT_MODEL_NAME = "openai/gpt-4.1-mini";
+ var globalLogger;
+ var defaultLogger = (logLine, disablePino) => __async(null, null, function* () {
 @@ -22055,13 +22055,13 @@ function getBrowser(apiKey, projectId, env = "LOCAL", headless = false, logger,
        const context = yield import_playwright5.chromium.launchPersistentContext(userDataDir, {
          acceptDownloads: (_a15 = localBrowserLaunchOptions == null ? void 0 : localBrowserLaunchOptions.acceptDownloads) != null ? _a15 : true,
