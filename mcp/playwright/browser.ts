@@ -18,23 +18,28 @@ function initNewStagehand(cdp?: string) {
   });
 }
 
-export async function loadStagehand() {
-  if (stagehand) {
-    return stagehand;
+/**
+ * Load Stagehand on the last page that was navigated to.
+ * 
+ * If the navigate endpoint was never called, this will return null.
+ */
+export function loadStagehand() {
+  return stagehand;
+}
+
+export async function navigateTo(url: string) {
+  if (!stagehand) {
+    try {
+      stagehand = initNewStagehand("http://localhost:9222");
+    } catch {
+      stagehand = initNewStagehand();
+    }
+
+    await stagehand.init();
   }
-
-  let browser;
-
-  try {
-    stagehand = initNewStagehand("http://localhost:9222");
-  } catch {
-    stagehand = initNewStagehand();
-  }
-
-  await stagehand.init();
 
   const { page } = stagehand;
-  await page.goto("http://localhost:5173");
 
-  return stagehand;
+  await page.goto(url);
+  await stagehand.page.waitForLoadState('networkidle');
 }

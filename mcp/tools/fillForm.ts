@@ -18,8 +18,18 @@ export const fillForm: MCPServerToolDefinition = {
     ): Promise<CallToolResult> => {
         console.log('Filling form for session:', context?.sessionId);
 
-        const stagehand = await loadStagehand();
-        await stagehand.page.waitForLoadState('networkidle');
+        const stagehand = loadStagehand();
+        if (!stagehand) {
+            return {
+                isError: true,
+                content: [
+                    {
+                        type: "text",
+                        text: "Please navigate to a page first."
+                    },
+                ],
+            };
+        }
 
         const agent = await stagehand.agent().execute("Fill out the form with some sample data and submit it");
       
