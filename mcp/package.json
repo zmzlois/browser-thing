@@ -22,7 +22,6 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
-  "private": true,
   "dependencies": {
     "@axe-core/playwright": "^4.10.2",
     "@browserbasehq/stagehand": "^2.4.1",
