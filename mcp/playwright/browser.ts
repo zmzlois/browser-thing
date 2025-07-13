@@ -1,7 +1,11 @@
 import { Stagehand } from "@browserbasehq/stagehand";
 import { type ConsoleMessage, type Request, type Response } from "playwright";
+import child_process from "child_process";
+import * as dotenv from "dotenv";
 
 let stagehand: Stagehand | null = null;
+
+dotenv.config();
 
 interface NetworkEntry {
     request: Request;
@@ -9,11 +13,15 @@ interface NetworkEntry {
     timestamp: number;
 }
 
-const apiKey = process.env.OPENAI_API_KEY; 
+
+const apiKey = process.env['OPENAI_API_KEY'] || process.env.OPENAI_API_KEY ; 
+console.log("apiKey", apiKey);
 
 if (!apiKey) {
     throw new Error("[browser-thing] OPENAI_API_KEY is not set");
 }
+
+console.log("apiKey", apiKey);
 
 function initNewStagehand(cdpUrl?: string) {
     return new Stagehand({
@@ -24,6 +32,7 @@ function initNewStagehand(cdpUrl?: string) {
         },
 
         localBrowserLaunchOptions: {
+            // @ts-ignore
             viewport: null,
             cdpUrl,
         },

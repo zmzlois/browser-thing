@@ -6,6 +6,7 @@
   "workspaces": ["./*", "test-app/*"],
   "scripts": {
     "mcp:dev": "node --loader ts-node/esm ./mcp/index.ts",
+    "bun:mcp:dev": "bun run --watch ./mcp/index.ts",
     "mcp:inspector": "bunx @modelcontextprotocol/inspector",
     "app:dev": "cd test-app && bun run dev"
   },

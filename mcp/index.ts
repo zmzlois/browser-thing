@@ -22,6 +22,7 @@ const tracer = trace.getTracer('mcp-server');
 import { loadStagehand } from './playwright/browser.js';
 import * as dotenv from 'dotenv';
 import { executeInBrowser } from './tools/executeInBrowser.js';
+import { cleanLogs } from './tools/cleanLogs.js';
 
 dotenv.config();
 
@@ -89,7 +90,6 @@ const getServer = () => {
     );
 
     server.tool(
-       
         executeInBrowser.name,
         executeInBrowser.description,
         executeInBrowser.schema,
@@ -110,13 +110,14 @@ const getServer = () => {
         wrapToolHandler('navigate_to', navigateTo.handler)
     );
 
-    server.tool(
-        getNetworkMessages.name,
-        getNetworkMessages.description,
-        getNetworkMessages.schema,
-        getNetworkMessages.handler
-    );
+    
 
+server.tool(
+        cleanLogs.name,
+        cleanLogs.description,
+        cleanLogs.schema,
+        wrapToolHandler('clean_logs', cleanLogs.handler)
+    );
     return server;
 }
 
