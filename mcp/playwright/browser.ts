@@ -27,7 +27,7 @@ export function loadStagehand() {
   return stagehand;
 }
 
-export async function navigateTo(url: string) {
+export async function navigate(url: string) {
   if (!stagehand) {
     try {
       stagehand = initNewStagehand("http://localhost:9222");
