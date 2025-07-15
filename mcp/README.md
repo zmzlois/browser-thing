@@ -1,5 +1,15 @@
 # mcp
+[![smithery badge](https://smithery.ai/badge/@zmzlois/frontline)](https://smithery.ai/server/@zmzlois/frontline)
 
+### Installing via Smithery
+
+To install mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@zmzlois/frontline):
+
+```bash
+npx -y @smithery/cli install @zmzlois/frontline --client claude
+```
+
+### Manual Installation
 To install dependencies:
 
 ```bash
