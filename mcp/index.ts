@@ -14,10 +14,13 @@ import { executeInBrowser } from './tools/executeInBrowser.js';
 import { cleanLogs } from './tools/cleanLogs.js';
 import { trace, context, SpanStatusCode } from '@opentelemetry/api';
 import * as dotenv from "dotenv";
+import { sdk } from '../../otel/index.js';
 
 dotenv.config({
     quiet: true,
 });
+
+sdk.start();
 
 // Create a tracer for MCP operations
 const tracer = trace.getTracer('mcp-server');
