@@ -1,8 +1,7 @@
 # Frontline Agent
 Never “open DevTools, hunt errors” again. Your agent does it while you keep coding.
 
-[Overview](#overview)
-[Inspiration](#overview)
+
 ## Overview
 Today’s coding agents can write code and run back-end tests, but front-end development still requires humans to open the browser, read console or network errors, and relay them back to code editors, or other coding agents that can be run locally. Frontline closes the gap by providing agents with live browser context, fully closing the loop on agent-driven development, allowing user to extend from their current SDLC. 
 
@@ -23,7 +22,7 @@ This application uses:
 3. Official [Module Context Protocol](https://www.npmjs.com/package/@modelcontextprotocol/sdk) for MCP server development
 4. [Template by Convex](https://www.convex.dev/templates)
 5. [Puppeteer](https://pptr.dev/guides/installation)
-6. [Anthropic AI SDK](https://www.npmjs.com/package/@anthropic-ai/sdk)
+6. OpenAI and [Anthropic AI SDK](https://www.npmjs.com/package/@anthropic-ai/sdk)
 
 
 ## Features
